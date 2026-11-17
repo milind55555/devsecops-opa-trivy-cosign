@@ -1,0 +1,29 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: verify-devsecops-demo-image-signature
+  annotations:
+    policies.kyverno.io/title: Verify Cosign signature
+    policies.kyverno.io/category: Software Supply Chain Security
+    policies.kyverno.io/description: Verifies keyless Cosign signatures produced by the trusted GitHub Actions workflow.
+spec:
+  validationFailureAction: Enforce
+  background: false
+  rules:
+    - name: verify-ecr-image-signature
+      match:
+        any:
+          - resources:
+              kinds: ["Pod"]
+              namespaces: ["devsecops-demo"]
+      verifyImages:
+        - imageReferences:
+            - "ACCOUNT_ID.dkr.ecr.ap-south-1.amazonaws.com/devsecops-demo*"
+          required: true
+          mutateDigest: true
+          verifyDigest: true
+          attestors:
+            - entries:
+                - keyless:
+                    subject: "https://github.com/YOUR_GITHUB_OWNER/YOUR_REPOSITORY/.github/workflows/devsecops.yml@refs/heads/main"
+                    issuer: "https://token.actions.githubusercontent.com"

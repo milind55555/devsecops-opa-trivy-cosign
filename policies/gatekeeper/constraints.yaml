@@ -1,0 +1,47 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sAllowedRegistries
+metadata:
+  name: approved-ecr-only
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+  parameters:
+    registries:
+      - "ACCOUNT_ID.dkr.ecr.ap-south-1.amazonaws.com/"
+---
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequireImageDigest
+metadata:
+  name: require-image-digests
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+    excludedNamespaces: ["kube-system", "gatekeeper-system", "kyverno"]
+  parameters:
+    excludedNamespaces: ["kube-system", "gatekeeper-system", "kyverno"]
+---
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sNonRoot
+metadata:
+  name: require-nonroot
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+    excludedNamespaces: ["kube-system", "gatekeeper-system", "kyverno"]
+---
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sContainerResources
+metadata:
+  name: require-container-resources
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+    excludedNamespaces: ["kube-system", "gatekeeper-system", "kyverno"]

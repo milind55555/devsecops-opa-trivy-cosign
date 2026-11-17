@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: negative-untrusted-registry
+  namespace: devsecops-demo
+spec:
+  containers:
+    - name: app
+      image: docker.io/library/nginx@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+      securityContext:
+        runAsNonRoot: true
+      resources:
+        requests: { cpu: 50m }
+        limits: { memory: 128Mi }

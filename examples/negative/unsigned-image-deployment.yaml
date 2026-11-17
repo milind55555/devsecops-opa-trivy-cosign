@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: negative-unsigned-image
+  namespace: devsecops-demo
+spec:
+  containers:
+    - name: app
+      image: ACCOUNT_ID.dkr.ecr.ap-south-1.amazonaws.com/devsecops-demo@sha256:REPLACE_WITH_UNSIGNED_IMAGE_DIGEST
+      securityContext:
+        runAsNonRoot: true
+      resources:
+        requests: { cpu: 50m }
+        limits: { memory: 128Mi }

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="760" viewBox="0 0 1440 760" role="img" aria-labelledby="title desc">
+<title id="title">DevSecOps secure software delivery architecture</title>
+<desc id="desc">GitHub Actions runs SonarQube and Trivy, publishes an image to ECR, signs it with Cosign, and deploys it to Kubernetes where Gatekeeper and Kyverno enforce policies.</desc>
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#64748b"/></marker>
+  <style>
+    .box{rx:16;ry:16;stroke-width:2}
+    .txt{font:600 20px Arial,sans-serif;fill:#0f172a;text-anchor:middle}
+    .sub{font:14px Arial,sans-serif;fill:#334155;text-anchor:middle}
+    .edge{stroke:#64748b;stroke-width:3;fill:none;marker-end:url(#arrow)}
+    .title{font:700 30px Arial,sans-serif;fill:#0f172a}
+    .hint{font:16px Arial,sans-serif;fill:#475569}
+  </style>
+</defs>
+<rect width="1440" height="760" fill="#f8fafc"/>
+<text x="64" y="58" class="title">DevSecOps secure software delivery</text>
+<text x="64" y="88" class="hint">Shift-left scanning • signed artifacts • Kubernetes admission enforcement</text>
+
+<rect class="box" x="55" y="260" width="170" height="112" fill="#dbeafe" stroke="#3b82f6"/>
+<text class="txt" x="140" y="305">Developer</text><text class="sub" x="140" y="333">Commit / Pull Request</text>
+
+<rect class="box" x="285" y="235" width="190" height="162" fill="#ede9fe" stroke="#8b5cf6"/>
+<text class="txt" x="380" y="280">GitHub Actions</text><text class="sub" x="380" y="311">CI workflow</text><text class="sub" x="380" y="336">OIDC identity</text><text class="sub" x="380" y="361">Build + test</text>
+
+<rect class="box" x="535" y="120" width="190" height="105" fill="#ffedd5" stroke="#f59e0b"/>
+<text class="txt" x="630" y="162">SonarQube</text><text class="sub" x="630" y="190">SAST / code quality</text>
+<rect class="box" x="535" y="300" width="190" height="105" fill="#dcfce7" stroke="#22c55e"/>
+<text class="txt" x="630" y="342">Trivy</text><text class="sub" x="630" y="370">FS + image CVE scan</text>
+
+<rect class="box" x="785" y="235" width="180" height="162" fill="#fef3c7" stroke="#d97706"/>
+<text class="txt" x="875" y="280">AWS ECR</text><text class="sub" x="875" y="311">Commit-tagged image</text><text class="sub" x="875" y="336">Digest reference</text><text class="sub" x="875" y="361">Critical CVE gate</text>
+
+<rect class="box" x="1020" y="235" width="180" height="162" fill="#fce7f3" stroke="#db2777"/>
+<text class="txt" x="1110" y="280">Cosign</text><text class="sub" x="1110" y="311">Keyless signature</text><text class="sub" x="1110" y="336">GitHub OIDC issuer</text><text class="sub" x="1110" y="361">Transparency log</text>
+
+<rect class="box" x="1245" y="235" width="160" height="162" fill="#e0f2fe" stroke="#0284c7"/>
+<text class="txt" x="1325" y="280">Kubernetes</text><text class="sub" x="1325" y="311">Admission</text><text class="sub" x="1325" y="336">+ workload</text><text class="sub" x="1325" y="361">deployment</text>
+
+<path class="edge" d="M225 316 H285"/>
+<path class="edge" d="M475 270 C500 270 500 172 535 172"/>
+<path class="edge" d="M475 340 H535"/>
+<path class="edge" d="M725 172 C755 172 750 260 785 260"/>
+<path class="edge" d="M725 352 H785"/>
+<path class="edge" d="M965 316 H1020"/>
+<path class="edge" d="M1200 316 H1245"/>
+
+<rect class="box" x="1040" y="500" width="165" height="112" fill="#ede9fe" stroke="#8b5cf6"/>
+<text class="txt" x="1122" y="544">OPA Gatekeeper</text><text class="sub" x="1122" y="572">Rego constraints</text><text class="sub" x="1122" y="592">Registry / digest / pod</text>
+<rect class="box" x="1240" y="500" width="165" height="112" fill="#fce7f3" stroke="#db2777"/>
+<text class="txt" x="1322" y="544">Kyverno</text><text class="sub" x="1322" y="572">Cosign verifyImages</text><text class="sub" x="1322" y="592">Reject unsigned images</text>
+<path class="edge" d="M1325 397 V455 H1122 V500"/>
+<path class="edge" d="M1205 556 H1240"/>
+<path class="edge" d="M1322 500 V455 H1325 V397"/>
+
+<rect class="box" x="535" y="500" width="350" height="112" fill="#fee2e2" stroke="#ef4444"/>
+<text class="txt" x="710" y="544">Build / admission denied</text><text class="sub" x="710" y="574">Critical CVE • invalid signature • policy violation</text>
+<path d="M630 405 V455 H710 V500" class="edge"/>
+<text class="hint" x="64" y="700">Gatekeeper enforces Rego admission constraints; Kyverno performs cryptographic Cosign signature verification.</text>
+</svg>

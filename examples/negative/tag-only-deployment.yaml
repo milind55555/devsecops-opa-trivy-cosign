@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: negative-tag-only
+  namespace: devsecops-demo
+spec:
+  containers:
+    - name: app
+      image: ACCOUNT_ID.dkr.ecr.ap-south-1.amazonaws.com/devsecops-demo:latest
+      securityContext:
+        runAsNonRoot: true
+      resources:
+        requests: { cpu: 50m }
+        limits: { memory: 128Mi }

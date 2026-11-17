@@ -1,0 +1,18 @@
+flowchart LR
+  Dev["Developer commit / PR"] --> GH["GitHub Actions"]
+  GH --> SQ["SonarQube SAST"]
+  GH --> FS["Trivy filesystem scan"]
+  SQ --> Build["Build Docker image"]
+  FS --> Build
+  Build --> Scan["Trivy image scan"]
+  Scan -->|"Critical CVE found"| Fail["Fail pipeline"]
+  Scan -->|"No Critical CVEs"| ECR["AWS ECR"]
+  ECR --> Sign["Cosign keyless signing\nGitHub OIDC"]
+  Sign --> GitOps["Deploy image by digest"]
+  GitOps --> Admission["Kubernetes admission"]
+  Admission --> GK["OPA Gatekeeper\nregistry / digest / runtime policies"]
+  Admission --> KY["Kyverno\nCosign signature verification"]
+  GK -->|"Pass"| KY
+  GK -->|"Reject"| Deny["Admission denied"]
+  KY -->|"Valid signature"| Pod["Workload runs"]
+  KY -->|"Unsigned / untrusted"| Deny
